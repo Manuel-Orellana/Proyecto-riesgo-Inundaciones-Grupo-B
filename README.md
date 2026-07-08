@@ -19,8 +19,8 @@ Aplicación_proyecto_web_anywhere/
 ```
 ## Requisitos
 
-python 3.10 o superior (se recomienda Python 3.10)
-pip (administrador de paquetes de Python)
+- python 3.10 o superior (se recomienda Python 3.10)
+- pip (administrador de paquetes de Python)
 
 ## Instalación
 
