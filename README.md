@@ -24,7 +24,7 @@ Aplicación_proyecto_web_anywhere/
 
 ## Instalación
 
-Dese una terminal en un directorio de windows, siga los siguientes pasos:
+Desde una terminal en un directorio de windows, siga los siguientes pasos:
 (para ello es necesario tener instalado git)
 
 1. Clonar el repositorio
