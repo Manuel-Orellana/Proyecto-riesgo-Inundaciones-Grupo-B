@@ -71,8 +71,10 @@ Creamos el objeto “app” usando Flask, se usa __name__ para obtener el nombre
 Es una función que va a recibir una parroquia (feature cuando hablamos de GeoJson), y de esa parroquia va sacar su riesgo (Previamente concatenado del CSV de predicciones). Para mediante su riesgo, darle un color. La función se va usar al momento de crear las capas para cada una de las parroquias.
 
 ### Ejemplo de “feature” en GeoJson:
+<img width="654" height="412" alt="image" src="https://github.com/user-attachments/assets/e67a85ca-a6e8-49e5-b581-28ff8c86d63f" />
 
 ### Ejemplo de uso de función de manera individual:
+<img width="886" height="132" alt="image" src="https://github.com/user-attachments/assets/231e02da-74ee-41ed-883c-3ba7a03a20fc" />
 
 ---
 
