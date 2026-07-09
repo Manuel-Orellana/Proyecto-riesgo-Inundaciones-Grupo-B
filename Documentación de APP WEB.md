@@ -26,6 +26,8 @@ Autores:
 
 # Obtención de GeoJson
 
+https://github.com/Manuel-Orellana/Obtenci-n-de-datos-para-proyecto/tree/d94f9e1024cc06c910bf1c2bdc28c1f2f33301ad/Crecion%20GeoJson%20Parroquias
+
 **Fuente:**  
 https://data.humdata.org/dataset/cod-ab-ecu 
 
