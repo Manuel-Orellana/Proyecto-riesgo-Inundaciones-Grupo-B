@@ -1,5 +1,14 @@
 # Documentación de APP WEB
 
+Autores:
+- Manuel Elías Orellana Lavayen
+- Diego Antonio Murillo Alvarado
+- Hernán Andrés Pilozo Rodríguez
+- Kelly Naomi Medina Guallo
+- Ian Erick López Llorentty
+- Miguel Alejandro Yglesias Alvea
+- Darío Ramón Robles Ponce
+
 ---
 
 # Archivos utilizados
