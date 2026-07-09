@@ -25,6 +25,8 @@ https://data.humdata.org/dataset/cod-ab-ecu
 (Es un shapefile que contiene las geometrías de cada parroquia del ecuador)
 
 De ese archivo se usan únicamente e las columnas que contienen el nombre de los tres niveles y los polígonos.
+<img width="878" height="302" alt="image" src="https://github.com/user-attachments/assets/bea84497-371e-413b-bc26-d0e4002e7a1d" />
+
 
 - Se simplifica la geometría (Polígonos) para que sea más rápido de cargar.
 - Se aplica una normalización a sus columnas de Provincia, Canton y Parroquia.
