@@ -46,6 +46,7 @@ De ese archivo se usan únicamente e las columnas que contienen el nombre de los
 ---
 
 # Obtención de CSV
+- https://github.com/Manuel-Orellana/Obtenci-n-de-datos-para-proyecto/tree/d94f9e1024cc06c910bf1c2bdc28c1f2f33301ad/Creacion_riesgo_inundacion_final 
 
 El CSV proviene de las predicciones realizadas por el modelo.
 
