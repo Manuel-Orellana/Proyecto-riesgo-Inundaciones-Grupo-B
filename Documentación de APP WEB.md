@@ -52,21 +52,21 @@ Se importan las librerías necesarias como lo son:
 
 ---
 
-# Parte 1 BASE_DIR
+### Parte 1 BASE_DIR
 
 Creamos BASE_DIR usando os, es una variable útil para obtener rutas relativas.
 
 ---
 
-# Parte 2 OBJETO APP
+### Parte 2 OBJETO APP
 
 Creamos el objeto “app” usando Flask, se usa __name__ para obtener el nombre del modulo actual. En este caso __main__.
 
 ---
 
-# Parte 3 FUNCIONES
+### Parte 3 FUNCIONES
 
-## color_riesgo
+#### color_riesgo
 
 Es una función que va a recibir una parroquia (feature cuando hablamos de GeoJson), y de esa parroquia va sacar su riesgo (Previamente concatenado del CSV de predicciones). Para mediante su riesgo, darle un color. La función se va usar al momento de crear las capas para cada una de las parroquias.
 
@@ -78,7 +78,7 @@ Es una función que va a recibir una parroquia (feature cuando hablamos de GeoJs
 
 ---
 
-## Resaltar
+#### Resaltar
 
 Es una función que va a dar ese efecto de resaltado cuando se pase el cursor por encima de las parroquias. Recibe una Feature aunque no hace nada con él, solo que es necesario, ya que cuando Folium usa la función si o si le pasa una feature.
 
@@ -88,37 +88,37 @@ Su uso se da en la creación de la capa de riesgo dentro de la función “crear
 
 ---
 
-## cargar_datos
+#### cargar_datos
 
 Es una función que va cargar los datos, recibe una ruta dse un archivo GeoJson y una ruta de un archivo CSV para leer ambos archivos.
 
-### Primero:
+##### Primero:
 Renombra las columnas del CSV con las columnas del GeoJson.
 
-### Segundo:
+##### Segundo:
 Se ajuste el índice del dataset para la concatenación y se lo guarda en “pred”.
 
-### Tercero:
+##### Tercero:
 Mediante un bucle for se recorren todas las parroquias del GesoJson.
 
-### Cuarto:
+##### Cuarto:
 En cada iteración extrae las propiedades de la parroquia.
 
-### Quinto:
+##### Quinto:
 Se crea una clave para buscar llamada “key”, e cual de las propiedades extrae los tres niveles de búsqueda.
 
-### Sexto:
+##### Sexto:
 Mediante una condicional verifica la existencia de la clave dentro de “pred”.
 
-### Séptimo:
+##### Séptimo:
 En caso de existir, agrega a las propiedades de esa parroquia el numero de inundaciones y el riesgo de inundación.
 
-### Octavo:
+##### Octavo:
 Devuelve el GeoJseon Concatenado.
 
 ---
 
-## calcular_estadisticas
+#### calcular_estadisticas
 
 Es una función que recibe el GeoJson que ya contiene todas las propiedades agregadas, crea una variable con todas las posibles clases de riesgo, agrega un contador mediante un diccionario por comprensión, recorre todas las parroquias, por cada parroquia obtiene el riesgo de inundación, parroquia que no tenga riesgo será catalogada como “sin datos”, se aumenta a el diccionario según la parroquia y devuelve un conteo.
 
@@ -126,17 +126,17 @@ Esta función solo se va usar para mas adelante agregar información a la leyend
 
 ---
 
-# crear_mapa
+#### crear_mapa
 
 Es la función mas importante por que es la que crea el mapa que luego se lo convierte a HTML.
 
 Va recibir únicamente de parámetro un GeoJson ya concatenado.
 
-## 1.
+###### 1.
 
 Se carga el mapa, para esto usamos la función Map de la librería folium, colocamos la localización de ecuador.
 
-## 2.
+###### 2.
 
 Creamos la capa que va representar el riesgo de inundación. Usamos GeoJson de la librería folium, el cual va recibir:
 
@@ -149,7 +149,7 @@ Creamos la capa que va representar el riesgo de inundación. Usamos GeoJson de l
 
 ---
 
-## 3.
+###### 3.
 
 Creamos capas independientes que van a representar el riesgo de inundación por provincias. Para ello aplicamos una logica similar a la capa general del mapa, solo que en este caso se lo hace mediante un bucle for, de la siguiente manera:
 
@@ -172,31 +172,31 @@ Creamos capas independientes que van a representar el riesgo de inundación por 
 
 ---
 
-## 4.
+###### 4.
 
 Agregamos a el mapa con “add_to()” distintas capas de estilos (“calles”, “claro”, “Oscuro”, “Satelite”).
 
 ---
 
-## 5.
+###### 5.
 
 Se agrega una leyenda flotante dentor del mapa qiue va permitir manipular todas las funciones que hemos agregado a el mapa, esto con “LayerControl” de la librería folium.
 
 ---
 
-## 6.
+###### 6.
 
 Se agrega a el mapa una opción de hacerla pantalla completa, esto con la función “Fullscreen” de folium y “add_to()”.
 
 ---
 
-## 7.
+###### 7.
 
 Por último se devuelve el mapa con “._repr_html_()” para que este en html listo para usar en la pagina html.
 
 ---
 
-# Parte 4 USO DE FUNCIONES
+### Parte 4 USO DE FUNCIONES
 
 Se crean las rutas, se cargan los datos y se usa la función “cargar_datos”, el resultado se lo guarda en una variable llamada “geojson_preparado”.
 
@@ -206,7 +206,7 @@ Se crea el mapa usando la función “crear_mapa” y mandándole como parámetr
 
 ---
 
-# Parte 5 CONFIGURACION DE RUTA
+### Parte 5 CONFIGURACION DE RUTA
 
 Mediante el decorador @app.route("/") se define la ruta principal de la aplicación. El símbolo "/" representa la página de inicio, por lo que esta función será ejecutada cada vez que un usuario acceda a la dirección principal del sitio web.
 
@@ -218,7 +218,7 @@ La función recibe tanto el mapa como las estadísticas.
 
 ---
 
-# Parte 6 CREACION DE CONDICION
+### Parte 6 CREACION DE CONDICION
 
 “if __name__ == "__main__":” verifica que el archivo esté siendo ejecutado directamente.
 
@@ -238,7 +238,7 @@ Para el diseño se utiliza Tailwind CSS, una librería de estilos que permite ap
 
 ---
 
-# Paso 1
+## Paso 1
 
 Se define la estructura básica de la página mediante las etiquetas html, head y body.
 
@@ -246,7 +246,7 @@ En el bloque head no se muestra a el usuario y solo se cargan los recursos neces
 
 ---
 
-# Paso 2
+## Paso 2
 
 En el body se crea el contenedor principal de la página, donde se organizan las diferentes secciones:
 
