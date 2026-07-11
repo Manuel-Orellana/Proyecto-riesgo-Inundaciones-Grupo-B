@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Es el nombre que aparece en la pestaña del navegador. -->
+    <title>GeoRiesgo - Clasificación del Riesgo de Inundación en Ecuador</title>
+    <!-- Carga Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga fuente Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bloque para definir los estilos y algunas animaciones de la página web (CSS añadido a el CSS cargado) -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        #map {
+            height: 600px;
+        }
+
+        .legend {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 12px;
+            line-height: 18px;
+            color: #1e293b;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.8;
+            border-radius: 4px;
+        }
+
+        /* Animación flotante para el logo */
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .float-logo {
+            animation: floating 3.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.35));
+            transition: transform 0.3s ease;
+        }
+
+        .float-logo:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<!-- Body es el cuerpo de la pagina, se usan varias clases del CSS cargado -->
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950">
+    <!-- main es el contenedor principal y recibe algunas clases-->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+        <!-- SECCIÓN DE BIENVENIDA -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center bg-gradient-to-b from-slate-950 to-slate-900 border border-slate-800 rounded-2xl px-10 py-8 shadow-2xl">
+
+            <!-- TEXTO -->
+            <div class="lg:col-span-2 flex flex-col justify-center">
+                <h2 class="text-5xl font-extrabold text-white leading-tight">
+                    Riesgo de inundación por parroquias del Ecuador
+                </h2>
+
+                <!-- Rango de registros -->
+                <div class="mt-4 inline-flex items-center gap-6 bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 w-fit">
+                    <div>
+                        <p class="text-xs uppercase tracking-wide text-slate-400">
+                            Registros desde
+                        </p>
+                        <p class="text-lg font-semibold text-cyan-400">
+                            2007-06-15
+                        </p>
+                    </div>
+
+                    <div class="w-px h-10 bg-slate-700"></div>
+
+                    <div>
+                        <p class="text-xs uppercase tracking-wide text-slate-400">
+                            Hasta
+                        </p>
+                        <p class="text-lg font-semibold text-cyan-400">
+                            2023-12-30
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOGO -->
+            <div class="flex justify-center">
+                <img
+                    src="{{ url_for('static', filename='UG_logo.png') }}"
+                    class="w-44 float-logo"
+                    alt="Universidad de Guayaquil">
+            </div>
+
+        </section>
+
+        <!-- SECCIÓN DE MAPA INTERACTIVO -->
+        <section id="mapa-seccion" class="space-y-4">
+
+            <!-- Título -->
+            <div class="text-center mb-4">
+                <h3 class="text-3xl font-bold text-white">
+                    Mapa Interactivo
+                </h3>
+
+                <p class="text-slate-400 mt-1">
+                    Pase el cursor o haga clic sobre las parroquias.
+                </p>
+            </div>
+
+            <!-- CONTENEDOR PRINCIPAL DE MAPA Y LEYENDA -->
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 items-start">
+
+                <!-- MAPA -->
+                <div class="lg:col-span-4">
+                    <!-- Se carga el mapa desde python -->
+                    <div class="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+                        {{ mapa|safe }}
+                    </div>
+                </div>
+
+                <!-- LEYENDA -->
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 shadow-2xl h-fit">
+
+                    <h4 class="text-lg font-bold text-white text-center mb-6">
+                        Leyenda
+                    </h4>
+
+                    <div class="space-y-4">
+
+                        <!-- Alto -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded mr-3" style="background:#E53935"></div>
+                                <span class="text-slate-300">Alto</span>
+                            </div>
+                            <!-- Se usan las estadisticas extraidas de python -->
+                            <span class="text-white font-semibold">
+                                {{ stats["Alto"] }}
+                            </span>
+                        </div>
+
+                        <!-- Medio -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded mr-3" style="background:#FB8C00"></div>
+                                <span class="text-slate-300">Medio</span>
+                            </div>
+                            <span class="text-white font-semibold">
+                                {{ stats["Medio"] }}
+                            </span>
+                        </div>
+
+                        <!-- Bajo -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded mr-3" style="background:#FDD835"></div>
+                                <span class="text-slate-300">Bajo</span>
+                            </div>
+                            <span class="text-white font-semibold">
+                                {{ stats["Bajo"] }}
+                            </span>
+                        </div>
+
+                        <!-- Nulo -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded mr-3" style="background:#66BB6A"></div>
+                                <span class="text-slate-300">Nulo</span>
+                            </div>
+                            <span class="text-white font-semibold">
+                                {{ stats["Nulo"] }}
+                            </span>
+                        </div>
+
+                        <!-- Sin datos -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 rounded mr-3" style="background:#BDBDBD"></div>
+                                <span class="text-slate-300">Sin datos</span>
+                            </div>
+                            <span class="text-white font-semibold">
+                                {{ stats["Sin datos"] }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE CIERRE-->
+        <section id="metodologia" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- BLOQUE DE INTEGRANTES -->
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-4">
+                <div class="text-cyan-400 text-lg font-bold">
+                    <i class="fa-solid fa-users mr-2"></i>Integrantes
+                </div>
+
+                <ul class="text-sm text-slate-300 space-y-2">
+                    <li>• Manuel Elías Orellana Lavayen</li>
+                    <li>• Diego Antony Murillo Alvarado</li>
+                    <li>• Hernán Andrés Pilozo Rodríguez</li>
+                    <li>• Kelly Naomi Medina Guallo</li>
+                    <li>• Ian Erick López Llorentty</li>
+                    <li>• Miguel Alejandro Yglesias Alvea</li>
+                    <li>• Dario Ramon Robles Ponce</li>
+                </ul>
+            </div>
+
+            <!-- BLOQUE DE FUENTE DE DATOS -->
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-4">
+                <div class="text-cyan-400 text-lg font-bold">
+                    <i class="fa-solid fa-database mr-2"></i>Fuentes de Datos
+                </div>
+
+                <ul class="text-sm text-slate-300 space-y-2">
+                    <li>• DesInventar</li>
+                    <li>• Datos Abiertos del Ecuador</li>
+                </ul>
+            </div>
+
+            <!-- BLOQUE DE PROYECTO ACADEMICO -->
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-2">
+                <div class="text-cyan-400 text-lg font-bold">
+                    <i class="fa-solid fa-chart-pie mr-2"></i>Proyecto académico
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Universidad de Guayaquil<br>
+                    Facultad de Ciencias Matemáticas y Físicas<br>
+                    Ciencia de Datos e Inteligencia Artificial<br>
+                    Segundo Parcial · 2026
+                </p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
