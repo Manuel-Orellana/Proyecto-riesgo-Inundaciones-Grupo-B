@@ -75,6 +75,20 @@ http://127.0.0.1:5000/
 - CSV
 - CSS (De manera interna en el HTML)
 
+## Despliegue en pythonanywhere
+
+1. Crear una cuenta en pythonanywhere
+2. En "Archivos" subir todos los archivos en zip
+3. Abrir una consola
+4. Descomprimir el archivo zip
+5. Se entra a la carpeta del archivo
+6. Se crea un entorno virtual
+7. Se instalan las librerias en ese entorno (Puede usar el archivo "requirements.txt" o directamente con pip)
+8. Se va a la pestaña de web, se crea una web y configura las rutas (Es necesario en "WSGI configuration file" configigurar la ruta del archivo)
+9. Se coloca en "Static files" la ruta de la capeta de estaticos
+10. Se actualiza la web
+11. Se prueba el link (https://manuelorellana.pythonanywhere.com/)
+
 ## Autores
 
 - Manuel Elías Orellana Lavayen
